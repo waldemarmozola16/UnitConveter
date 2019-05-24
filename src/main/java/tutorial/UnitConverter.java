@@ -3,27 +3,49 @@ package tutorial;
 import javax.swing.*;
 
 public class UnitConverter {
+
+    private static final double CENTIMETERS = 2.54;
+    private static final double INCHES = .3937;
+
+    private static final String INCH_UNIT = "in";
+    private static final String CENTIMETER_UNIT = "cm";
+
+    private static final String INPUT_TEXT = "Enter a number, a space, unit: in, cm, yd, m";
+
     public static void main(String[] args) {
 
-        String userInput = JOptionPane.showInputDialog("Enter a number, a space, unit: in, cm, yd, m");
-        int spacePos = userInput.indexOf(" ");
-        double number = Double.parseDouble(userInput.substring(0, userInput.indexOf(" ")));
-        String unit = userInput.substring(spacePos + 1, userInput.length()).trim();
+        String userInput = getUserInput();
+        String[] dividedUserInput = userInput.split(" ");
 
-        final double CENTIMETERS = 2.54;
-        final double INCHES = .3937;
+        double userValue = getNumber(dividedUserInput);
+        String userUnits = getUnit(dividedUserInput);
 
-        double num = 0;
-        String u = null;
+        String converted = convert(userValue, userUnits);
 
-        if (unit.equalsIgnoreCase("cm")) {
-            num = number / CENTIMETERS;
-            u = "in";
-        } else if (unit.equalsIgnoreCase("in")) {
-            num = number / INCHES;
-            u = "cm";
-
-        }
-        System.out.println(number + " " + unit + " = " + num + " " + u);
+        printConversion(userInput, converted);
     }
+
+    private static String convert(double userValue, String unit) {
+        if (unit.equalsIgnoreCase(CENTIMETER_UNIT)) return userValue / CENTIMETERS + " " + INCH_UNIT;
+        if (unit.equalsIgnoreCase(INCH_UNIT)) return userValue / INCHES + " " + CENTIMETER_UNIT;
+        return "Couldn't find proper unit in user Input!";
+    }
+
+
+    private static String getUnit(String[] dividedUserInput) {
+        return dividedUserInput[0];
+    }
+
+    private static double getNumber(String[] dividedUserInput) {
+        return Double.parseDouble(dividedUserInput[0]);
+    }
+
+    private static String getUserInput() {
+        return JOptionPane.showInputDialog(INPUT_TEXT);
+    }
+
+    private static void printConversion(String userInput, String converted) {
+        System.out.println(userInput + " = " + converted);
+    }
+
 }
