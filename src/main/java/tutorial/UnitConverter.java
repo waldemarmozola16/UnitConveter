@@ -1,51 +1,30 @@
 package tutorial;
 
-import javax.swing.*;
+import java.util.Scanner;
 
 public class UnitConverter {
 
-    private static final double CENTIMETERS = 2.54;
-    private static final double INCHES = .3937;
-
-    private static final String INCH_UNIT = "in";
-    private static final String CENTIMETER_UNIT = "cm";
-
-    private static final String INPUT_TEXT = "Enter a number, a space, unit: in, cm, yd, m";
-
     public static void main(String[] args) {
 
-        String userInput = getUserInput();
-        String[] dividedUserInput = userInput.split(" ");
 
-        double userValue = getNumber(dividedUserInput);
-        String userUnits = getUnit(dividedUserInput);
+        final double INCH = 0.394;
+        final double METER = 0.01;
+        final double KILOMETER = 0.00001;
 
-        String converted = convert(userValue, userUnits);
+        Scanner in = new Scanner(System.in);
 
-        printConversion(userInput, converted);
+
+        System.out.print("Enter length in centimeters : ");
+        double cm = in.nextDouble();
+
+
+        double inch = cm * INCH;
+        double m = cm * METER;
+        double km = cm * KILOMETER;
+
+
+        System.out.println(cm + " cm is equal to " + inch + " inches.");
+        System.out.println(cm + " cm is equal to " + m + " meters.");
+        System.out.println(cm + " cm is equal to " + inch + " kilometers.");
     }
-
-    private static String convert(double userValue, String unit) {
-        if (unit.equalsIgnoreCase(CENTIMETER_UNIT)) return userValue / CENTIMETERS + " " + INCH_UNIT;
-        if (unit.equalsIgnoreCase(INCH_UNIT)) return userValue / INCHES + " " + CENTIMETER_UNIT;
-        return "Couldn't find proper unit in user Input!";
-    }
-
-
-    private static String getUnit(String[] dividedUserInput) {
-        return dividedUserInput[0];
-    }
-
-    private static double getNumber(String[] dividedUserInput) {
-        return Double.parseDouble(dividedUserInput[0]);
-    }
-
-    private static String getUserInput() {
-        return JOptionPane.showInputDialog(INPUT_TEXT);
-    }
-
-    private static void printConversion(String userInput, String converted) {
-        System.out.println(userInput + " = " + converted);
-    }
-
 }
